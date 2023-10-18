@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ExpenseTrackerModel {
 
-  public List<Transaction> transactions;
+  private final List<Transaction> transactions;
 
   public ExpenseTrackerModel() {
     transactions = new ArrayList<>(); 
@@ -20,7 +20,13 @@ public class ExpenseTrackerModel {
   }
 
   public List<Transaction> getTransactions() {
-    return transactions;
+    // create a deep copy to return
+    List<Transaction> copyTransactions = new ArrayList<Transaction>();
+    for (Transaction transaction : transactions) {
+      Transaction copyTransaction = new Transaction(transaction.getAmount(), transaction.getCategory());
+      copyTransactions.add(copyTransaction);
+    }
+    return copyTransactions;
   }
 
 }
