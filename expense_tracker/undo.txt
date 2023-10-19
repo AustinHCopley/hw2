@@ -1,0 +1,9 @@
+Model:
+utilize the removeTransaction() method that is already included in the model
+
+View:
+
+Controller:
+add a new method called removeTransaction:
+take in a Transaction t and int index as parameters and 
+removes the specific index from the transactionsTable
