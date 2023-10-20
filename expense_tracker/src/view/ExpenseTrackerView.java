@@ -4,7 +4,11 @@ import javax.swing.*;
 import javax.swing.JFormattedTextField.AbstractFormatterFactory;
 import javax.swing.table.DefaultTableModel;
 
+import controller.AmountFilter;
+import controller.CategoryFilter;
+import controller.ExpenseTrackerController;
 import controller.InputValidation;
+import controller.TransactionFilter;
 
 import java.awt.*;
 import java.text.NumberFormat;
@@ -19,6 +23,7 @@ public class ExpenseTrackerView extends JFrame {
   private JFormattedTextField amountField;
   private JTextField categoryField;
   private DefaultTableModel model;
+  private ExpenseTrackerController controller;
   
 
   public ExpenseTrackerView() {
@@ -90,7 +95,7 @@ public class ExpenseTrackerView extends JFrame {
   
     }  
   
-
+  
   
   
   public JButton getAddTransactionBtn() {
@@ -124,5 +129,17 @@ public class ExpenseTrackerView extends JFrame {
 
   public void setCategoryField(JTextField categoryField) {
     this.categoryField = categoryField;
+  }
+
+  public void applyCategoryFilter(String category) {
+      TransactionFilter filter = new CategoryFilter(category);
+      List<Transaction> filteredTransactions = controller.applyFilter(filter);
+      // Update the view with filtered data
+  }
+
+  public void applyAmountFilter(double minAmount, double maxAmount) {
+      TransactionFilter filter = new AmountFilter(minAmount, maxAmount);
+      List<Transaction> filteredTransactions = controller.applyFilter(filter);
+      // Update the view with filtered data
   }
 }
