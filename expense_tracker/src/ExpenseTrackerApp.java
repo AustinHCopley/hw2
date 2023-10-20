@@ -34,6 +34,15 @@ public class ExpenseTrackerApp {
       }
     });
 
+    view.getCatBtn().addActionListener(e -> {
+      String category = view.getCatFilter();
+    });
+
+    view.getAmntBtn().addActionListener(e -> {
+      double min = view.getAmntMin();
+      double max = view.getAmntMax();
+    });
+
   }
 
 }

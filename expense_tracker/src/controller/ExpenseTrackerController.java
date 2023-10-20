@@ -9,6 +9,7 @@ import java.util.List;
 
 import model.ExpenseTrackerModel;
 import model.Transaction;
+// import view;
 public class ExpenseTrackerController {
   
   private ExpenseTrackerModel model;
@@ -47,6 +48,7 @@ public class ExpenseTrackerController {
     return true;
   }
 
+  // Other controller methods
   public boolean removeTransaction(Transaction t, int index) {
     model.removeTransaction(t);
     view.getTableModel().removeRow(index);
@@ -54,12 +56,15 @@ public class ExpenseTrackerController {
     return true;
   }
   
-  // Other controller methods
   public List<Transaction> applyFilter(TransactionFilter filter) {
-        List<Transaction> filteredTransactions = filter.filter(transactions);
+    List<Transaction> filteredTransactions = filter.filter(transactions);
 
-        // IMplement Highlight the filtered transactions in green
+    // IMplement Highlight the filtered transactions in green
+    // for (Transaction transaction : transactions) {
 
-        return filteredTransactions;
-    }
+    // }
+    // view.getTransactionsTable().setSelectionBackground(new Color(173,255,168));
+    return filteredTransactions;
+  }
+
 }
