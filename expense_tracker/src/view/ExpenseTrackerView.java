@@ -201,15 +201,4 @@ public class ExpenseTrackerView extends JFrame {
     }
   }
 
-  public void applyCategoryFilter(String category) {
-      TransactionFilter filter = new CategoryFilter(category);
-      List<Transaction> filteredTransactions = controller.applyFilter(filter);
-      // Update the view with filtered data
-  }
-
-  public void applyAmountFilter(double minAmount, double maxAmount) {
-      TransactionFilter filter = new AmountFilter(minAmount, maxAmount);
-      List<Transaction> filteredTransactions = controller.applyFilter(filter);
-      // Update the view with filtered data
-  }
 }

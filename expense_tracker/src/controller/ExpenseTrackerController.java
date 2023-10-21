@@ -9,7 +9,7 @@ import java.util.List;
 
 import model.ExpenseTrackerModel;
 import model.Transaction;
-// import view;
+import controller.InputValidation;
 public class ExpenseTrackerController {
   
   private ExpenseTrackerModel model;
@@ -49,22 +49,43 @@ public class ExpenseTrackerController {
   }
 
   // Other controller methods
-  public boolean removeTransaction(Transaction t, int index) {
-    model.removeTransaction(t);
-    view.getTableModel().removeRow(index);
-    refresh();
+
+  // For undo functionality:
+  // public boolean removeTransaction(Transaction t, int index) {
+  //   model.removeTransaction(t);
+  //   view.getTableModel().removeRow(index);
+  //   refresh();
+  //   return true;
+  // }
+  
+  public boolean applyFilter(TransactionFilter filter) {
+
+    List<Transaction> filteredTransactions = filter.filter(model.getTransactions());
+    // check if the transactions table has any values
+    if (view.getTransactionsTable() == null || model.getTransactions() == null) {
+      return false;
+    }
+    // clear previously selected rows
+    view.getTransactionsTable().clearSelection();
+    // initialize new variables with dummy values
+    double amount = 0.0;
+    String category = "none";
+
+    // check every transaction in filtered and total against eachother if they match
+    for (int i = 0; i < view.getTableModel().getRowCount() - 1; i++) {
+      // set the variables to the current row's values
+      amount = (double) view.getTableModel().getValueAt(i,1);
+      category = (String) view.getTableModel().getValueAt(i,2);
+
+      for (Transaction filtTrans : filteredTransactions) {
+        if ( filtTrans.getAmount() == amount && filtTrans.getCategory().equals(category)) {
+          // if they match, add them to the selection interval
+          view.getTransactionsTable().addRowSelectionInterval(i, i);
+        }
+      }
+    }
+    // update the color of the selection
+    view.getTransactionsTable().setSelectionBackground(new Color(173,255,168));
     return true;
   }
-  
-  public List<Transaction> applyFilter(TransactionFilter filter) {
-    List<Transaction> filteredTransactions = filter.filter(transactions);
-
-    // IMplement Highlight the filtered transactions in green
-    // for (Transaction transaction : transactions) {
-
-    // }
-    // view.getTransactionsTable().setSelectionBackground(new Color(173,255,168));
-    return filteredTransactions;
-  }
-
 }

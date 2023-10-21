@@ -1,7 +1,10 @@
 Model:
-utilize the removeTransaction() method that is already included in the model
+utilize the removeTransaction() method that is already included 
+in the model
 
 View:
+add a mouse listener that handles a click on the JTable and
+calls the removeTransaction method with index of the selected row
 
 Controller:
 add a new method called removeTransaction:

@@ -6,6 +6,8 @@ import model.ExpenseTrackerModel;
 import view.ExpenseTrackerView;
 import model.Transaction;
 import controller.InputValidation;
+import controller.AmountFilter;
+import controller.CategoryFilter;
 
 public class ExpenseTrackerApp {
 
@@ -35,12 +37,28 @@ public class ExpenseTrackerApp {
     });
 
     view.getCatBtn().addActionListener(e -> {
-      String category = view.getCatFilter();
+      String categoryFilt = view.getCatFilter();
+      if (!InputValidation.isValidCategory(categoryFilt)) {
+        JOptionPane.showMessageDialog(view, "Invalid category to filter with");
+      }
+      boolean filtered = controller.applyFilter(new CategoryFilter(categoryFilt));
+      if (!filtered) {
+        JOptionPane.showMessageDialog(view, "No data to filter");
+        view.toFront();
+      }
     });
 
     view.getAmntBtn().addActionListener(e -> {
       double min = view.getAmntMin();
       double max = view.getAmntMax();
+      if (!InputValidation.isValidAmount(min) || !InputValidation.isValidAmount(max)) {
+        JOptionPane.showMessageDialog(view, "Invalid amount to filter with");
+      }
+      boolean filtered = controller.applyFilter(new AmountFilter(min, max));
+      if (!filtered) {
+        JOptionPane.showMessageDialog(view, "No data to filter");
+        view.toFront();
+      }
     });
 
   }
